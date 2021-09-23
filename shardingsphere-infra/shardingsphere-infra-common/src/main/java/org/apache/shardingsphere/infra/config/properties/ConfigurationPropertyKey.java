@@ -118,23 +118,33 @@ public enum ConfigurationPropertyKey implements TypedPropertyKey {
      * if client connections are more than proxy-frontend-netty-executor-size, especially executing slow SQL.
      */
     PROXY_BACKEND_EXECUTOR_SUITABLE("proxy-backend-executor-suitable", "OLAP", String.class),
-    
+
     /**
      * Less than or equal to 0 means no limitation.
      */
     PROXY_FRONTEND_MAX_CONNECTIONS("proxy-frontend-max-connections", "0", int.class),
-    
+
     /**
      * Whether enable sql federation.
      */
-    SQL_FEDERATION_ENABLED("sql-federation-enabled", String.valueOf(Boolean.FALSE), boolean.class);
-    
+    SQL_FEDERATION_ENABLED("sql-federation-enabled", String.valueOf(Boolean.FALSE), boolean.class),
+
+    /**
+     * Whether choose main db as destination for D*L except DQL other than inherit standard sharding rules.
+     */
+    FORCE_ROUTE_TO_MAIN_DB_EXCEPT_DQL("force-route-to-main-db-except-dql", String.valueOf(Boolean.FALSE), Boolean.class),
+
+    /**
+     * The destination of D*L except DQL.
+     */
+    MAIN_DB("main-db", "ds_0", String.class);
+
     private final String key;
     
     private final String defaultValue;
     
     private final Class<?> type;
-    
+
     /**
      * Get property key names.
      *
