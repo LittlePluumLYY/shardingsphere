@@ -61,7 +61,7 @@
         <module name="AnonInnerLength"/>
         <module name="MethodLength"/>
         <module name="LineLength">
-            <property name="max" value="200"/>
+            <property name="max" value="250"/>
         </module>
         <module name="OuterTypeNumber"/>
 

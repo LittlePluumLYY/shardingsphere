@@ -20,6 +20,7 @@ package org.apache.shardingsphere.sharding.route.engine.type.standard;
 import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
 import org.apache.shardingsphere.infra.config.properties.ConfigurationProperties;
+import org.apache.shardingsphere.infra.config.properties.ConfigurationPropertyKey;
 import org.apache.shardingsphere.infra.datanode.DataNode;
 import org.apache.shardingsphere.infra.hint.HintManager;
 import org.apache.shardingsphere.infra.route.context.RouteContext;
@@ -219,6 +220,10 @@ public final class ShardingStandardRoutingEngine implements ShardingRouteEngine 
         Collection<DataNode> result = new LinkedList<>();
         for (String each : routedTables) {
             result.add(new DataNode(routedDataSource, each));
+        }
+
+        if (result.isEmpty() && !availableTargetTables.isEmpty() && properties.<Boolean>getValue(ConfigurationPropertyKey.FORCE_ROUTE_TO_MAIN_DB_EXCEPT_DQL) && routedDataSource.equals(properties.<String>getValue(ConfigurationPropertyKey.MAIN_DB))) {
+            availableTargetTables.forEach(table -> result.add(new DataNode(routedDataSource, table)));
         }
         return result;
     }
