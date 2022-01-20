@@ -131,6 +131,9 @@ public final class GroupByMemoryMergedResult extends MemoryMergedResult<Sharding
         for (SimpleTableSegment each : selectStatementContext.getAllTables()) {
             String tableName = each.getTableName().getIdentifier().getValue();
             TableMetaData tableMetaData = schema.get(tableName);
+            if (tableMetaData == null) {
+                continue;
+            }
             Map<String, ColumnMetaData> columns = tableMetaData.getColumns();
             String columnName = queryResult.getMetaData().getColumnName(columnIndex);
             if (columns.containsKey(columnName)) {
